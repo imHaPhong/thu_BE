@@ -14,7 +14,17 @@ const NewSchema = new mongoose.Schema({
     type: String,
     default: "https://iupac.org/wp-content/uploads/2018/05/default-avatar.png",
   },
-  comment: []
+  comment: [
+    { uId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "User",
+    },
+    comment: {
+      type: String,
+      required: true,
+    }
+  }
+  ]
 });
 
 const News = mongoose.model("News", NewSchema);

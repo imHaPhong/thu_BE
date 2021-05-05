@@ -90,5 +90,16 @@ module.exports = {
     },
     deletePost: async (req, res) => {
       await News.deleteOne({_id: req.body.id})
+      res.json({oke: "oke"})
+    },
+    userAddcomment: async (req, res) => {
+       const posts = await News.findById(req.body.pid)
+       posts.comment = posts.comment.concat({uId: req.body.uId, comment: req.body.comment})
+       await posts.save()
+       res.json(posts)
+    },
+    getAllComment: async (req, res) => {
+      const posts = await News.findById(req.params.id).populate('comment.uId')
+      res.json(posts)
     }
 };

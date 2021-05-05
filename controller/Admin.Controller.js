@@ -45,5 +45,11 @@ module.exports = {
     newc.link = req.body.link
     await newc.save()
     res.status(200).json(newc)
+  },
+  adminDeleteComment: async (req, res) => {
+    const posts = await News.findById(req.body.pId)
+    posts.comment = posts.comment.filter(el => el._id != req.body.cId)
+    await posts.save()
+    res.json(posts)
   }
 };

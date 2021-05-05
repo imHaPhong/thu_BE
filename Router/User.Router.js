@@ -1,7 +1,6 @@
 const UserController = require("../controller/User.Controller");
 var multer  = require('multer')
 var path = require('path');
-const { mPath } = require("../globalvaribal");
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -28,6 +27,8 @@ Router.post("/upload", upload.single('avatar'), UserController.userUploadAvatar)
 Router.get("/leagueById/:id", UserController.userGetLeagueByTeam);
 Router.get("/leagueByTeam/:id", UserController.getTeamByLeague);
 Router.post("/deletePost", UserController.deletePost);
+Router.post("/userAddcomment", UserController.userAddcomment);
+Router.get("/userGetAllComment/:id", UserController.getAllComment);
 
 
 module.exports = Router;
