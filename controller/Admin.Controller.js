@@ -2,6 +2,7 @@ const User = require("../model/User");
 const Club = require("../model/Club");
 const News = require("../model/News");
 const Score = require("../model/Score");
+const ULC = require("../model/ULC");
 const League = require("../model/League");
 
 module.exports = {
@@ -19,6 +20,15 @@ module.exports = {
   addScore: async (req, res) => {
     try {
       const score = await Score(req.body);
+      await score.save();
+      res.status(200).json(score);
+    } catch (error) {
+      res.status(200).json(error);
+    }
+  },
+  addULC: async (req, res) => {
+    try {
+      const score = await ULC(req.body);
       await score.save();
       res.status(200).json(score);
     } catch (error) {
@@ -51,6 +61,18 @@ module.exports = {
     res.status(200).json(newc);
   },
   adminDeleteComment: async (req, res) => {
+    const posts = await News.findById(req.body.pId);
+    posts.comment = posts.comment.filter((el) => el._id != req.body.cId);
+    await posts.save();
+    res.json(posts);
+  },
+  deleteScore: async (req, res) => {
+    const posts = await Score.findById(req.body.pId);
+    posts._id = posts.filter((el) => el._id != req.body.cId);
+    await posts.save();
+    res.json(posts);
+  },
+  deleteUCL: async (req, res) => {
     const posts = await News.findById(req.body.pId);
     posts.comment = posts.comment.filter((el) => el._id != req.body.cId);
     await posts.save();
